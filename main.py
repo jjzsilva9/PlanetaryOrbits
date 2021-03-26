@@ -15,11 +15,12 @@ class Planet:
     self.Fy = 0
 
   def update(self, planets):
-    for planet in planets:
-      distanceX = self.postion[0] - planet.position[0]
-      distanceY = self.postion[1] - planet.position[1]
-      self.Fx+= (G*planet.mass*self.mass)/distanceX
-      self.Fy+= (G*planet.mass*self.mass)/distanceY
+    for sphere in planets:
+      if sphere != self:
+        distanceX = self.postion[0] - sphere.position[0]
+        distanceY = self.postion[1] - sphere.position[1]
+        self.Fx+= (G*sphere.mass*self.mass)/distanceX
+        self.Fy+= (G*sphere.mass*self.mass)/distanceY
 
   def draw(self):
     t.speed(100)
@@ -31,6 +32,8 @@ class Planet:
     t.circle(self.radius)
     t.end_fill()
 
-
+planets = []
 earth = Planet(50, 10, "green", [0, 0])
+planets.append(earth)
 earth.draw()
+earth.update(planets)
