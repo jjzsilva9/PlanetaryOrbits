@@ -2,6 +2,7 @@ import turtle
 from scipy.constants import G
 import math
 t = turtle.Turtle()
+t.hideturtle()
 
 class Planet:
   
@@ -21,10 +22,15 @@ class Planet:
       self.Fy+= (G*planet.mass*self.mass)/distanceY
 
   def draw(self):
+    t.speed(100)
     t.penup()
     t.setpos(self.position)
+    t.pendown()
+    t.fillcolor(self.colour)
+    t.begin_fill()
     t.circle(self.radius)
+    t.end_fill()
 
 
-earth = Planet(50, 10, None, [0, 0])
+earth = Planet(50, 10, "green", [0, 0])
 earth.draw()
