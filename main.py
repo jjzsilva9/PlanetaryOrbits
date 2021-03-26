@@ -1,6 +1,7 @@
 import turtle
 from scipy.constants import G
 import math
+import datetime
 t = turtle.Turtle()
 t.hideturtle()
 
@@ -21,6 +22,10 @@ class Planet:
         distanceY = self.postion[1] - sphere.position[1]
         self.Fx+= (G*sphere.mass*self.mass)/distanceX
         self.Fy+= (G*sphere.mass*self.mass)/distanceY
+        velocityX = self.Fx/self.mass
+        velocityY = self.Fy/self.mass
+        self.position[0] += velocityX * datetime.timedelta
+        self.position[1] += velocityY * datetime.timedelta
 
   def draw(self):
     t.speed(100)
@@ -33,7 +38,13 @@ class Planet:
     t.end_fill()
 
 planets = []
-earth = Planet(50, 10, "green", [0, 0])
+earth = Planet(5, 10, "green", [0, 0])
+sun = Planet(20, 100, "yellow", [150, 50])
 planets.append(earth)
-earth.draw()
-earth.update(planets)
+planets.append(sun)
+
+
+while True:
+  for planet in planets:
+    planet.update(planets)
+    planet.draw()
