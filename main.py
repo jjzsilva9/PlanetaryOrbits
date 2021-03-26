@@ -2,35 +2,37 @@ import turtle
 from scipy.constants import G
 import math
 import datetime
+import time
 t = turtle.Turtle()
 t.hideturtle()
 
 class Planet:
   
-  def __init__(self, radius, mass, colour, postion):
+  def __init__(self, radius, mass, colour, x, y):
     self.radius = radius
     self.mass = mass
     self.colour = colour
-    self.position = postion
+    self.x = x
+    self.y = y
     self.Fx = 0
     self.Fy = 0
 
   def update(self, planets):
     for sphere in planets:
       if sphere != self:
-        distanceX = self.postion[0] - sphere.position[0]
-        distanceY = self.postion[1] - sphere.position[1]
+        distanceX = self.x - sphere.x
+        distanceY = self.y - sphere.y
         self.Fx+= (G*sphere.mass*self.mass)/distanceX
         self.Fy+= (G*sphere.mass*self.mass)/distanceY
         velocityX = self.Fx/self.mass
         velocityY = self.Fy/self.mass
-        self.position[0] += velocityX * datetime.timedelta
-        self.position[1] += velocityY * datetime.timedelta
+        self.x += velocityX
+        self.y += velocityY
 
   def draw(self):
     t.speed(100)
     t.penup()
-    t.setpos(self.position)
+    t.setpos(self.x, self.y)
     t.pendown()
     t.fillcolor(self.colour)
     t.begin_fill()
@@ -38,13 +40,10 @@ class Planet:
     t.end_fill()
 
 planets = []
-earth = Planet(5, 10, "green", [0, 0])
-sun = Planet(20, 100, "yellow", [150, 50])
-planets.append(earth)
-planets.append(sun)
 
 
 while True:
+  time.sleep(0.1)
   for planet in planets:
     planet.update(planets)
     planet.draw()
